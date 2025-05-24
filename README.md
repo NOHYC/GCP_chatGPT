@@ -39,13 +39,13 @@ streamlit-docker-gcp-cicd/
 3. GCP 외부 IP에서 앱 확인 → `http://YOUR_GCP_IP`
 
 
-#📍 GCP 설정 체크리스트
- GCP VM 생성 (Ubuntu 기반)
+## TEST app chatgpt
 
- 도커 설치 및 usermod -aG docker 사용자명
+![gptgif](test1_gpt.gif) 
 
- 외부 IP 고정 또는 업데이트 시 GitHub Secret 갱신
+- openai api 인증키 입력
 
- 방화벽에서 포트 22(SSH), 80(HTTP) 허용
+- chatGPT[gpt-4o] 활성화
 
+- 어플 시작
 

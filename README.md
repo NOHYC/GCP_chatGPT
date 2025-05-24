@@ -8,17 +8,27 @@
 ## 📦 프로젝트 구조
 
 streamlit-docker-gcp-cicd/
+
 ├── app.py # Streamlit 앱
+
 ├── requirements.txt # Python 패키지 목록
+
 ├── Dockerfile # Docker 이미지 정의
+
 └── .github/
+
 └── workflows/
+
 └── deploy.yml # GitHub Actions CI/CD 스크립트
 
 
 
 
+
+
 ## ⚙️ 자동 배포 흐름
+
+
 
 1. `main` 브랜치에 코드 Push
 2. GitHub Actions가 동작하여:
@@ -29,7 +39,7 @@ streamlit-docker-gcp-cicd/
 3. GCP 외부 IP에서 앱 확인 → `http://YOUR_GCP_IP`
 
 
-📍 GCP 설정 체크리스트
+#📍 GCP 설정 체크리스트
  GCP VM 생성 (Ubuntu 기반)
 
  도커 설치 및 usermod -aG docker 사용자명

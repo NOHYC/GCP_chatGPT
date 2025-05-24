@@ -4,13 +4,23 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 
-st.title("🔑 OpenAI API 키 입력 GPT")
+st.title("chatGPT[gpt-4o]")
 
 # 세션 상태 초기화
 if "api_key" not in st.session_state:
     st.session_state["api_key"] = None
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
+
+
+# 사이드바 생성
+with st.sidebar:
+    clear_btn = st.button("대화 초기화")
+
+# 초기화 버튼이 눌리면
+if clear_btn:
+    st.session_state["messages"] = []
+
 
 # 사용자로부터 API 키 입력 받기
 if st.session_state["api_key"] is None:

@@ -38,18 +38,19 @@ if st.session_state["api_key"] is None:
             response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",  # 또는 "gpt-4"
             messages=[{"role": "user", "content": "안녕"}],
-            timeout=10
+            timeout=3
             )
             st.rerun()  # 키가 입력되면 페이지 리로드로 적용
+            st.write("인증 완료")
         except AuthenticationError:
-            print("❌ OpenAI API 키를 다시 확인해주세요.")
+            st.write("❌ OpenAI API 키를 다시 확인해주세요.")
             api_key_input = None  
         except APIStatusError as e:
-            print(f"⚠️ 오류 발생: {str(e)}")
+            st.write(f"⚠️ 오류 발생: {str(e)}")
             api_key_input = None
 
         except Exception as e:
-            print(f"⚠️ 기타 오류 발생: {str(e)}")
+            st.write(f"⚠️ 기타 오류 발생: {str(e)}")
             api_key_input = None
 
 else:

@@ -3,6 +3,8 @@ from langchain_core.messages.chat import ChatMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
+import openai
+from openai import OpenAIError
 
 st.title("chatGPT[gpt-4o]")
 

@@ -4,7 +4,8 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 import openai
-from openai import OpenAIError
+from openai import OpenAI, AuthenticationError, APIStatusError
+
 
 st.title("chatGPT[gpt-4o]")
 
@@ -40,11 +41,15 @@ if st.session_state["api_key"] is None:
             timeout=10
             )
             st.rerun()  # 키가 입력되면 페이지 리로드로 적용
-        except openai.error.AuthenticationError:
+        except AuthenticationError:
             print("❌ OpenAI API 키를 다시 확인해주세요.")
             api_key_input = None  
-        except OpenAIError as e:
+        except APIStatusError as e:
             print(f"⚠️ 오류 발생: {str(e)}")
+            api_key_input = None
+
+        except Exception as e:
+            print(f"⚠️ 기타 오류 발생: {str(e)}")
             api_key_input = None
 
 else:

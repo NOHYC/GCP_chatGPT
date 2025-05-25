@@ -15,6 +15,9 @@ if "api_key" not in st.session_state:
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
+# 새로운 메시지 추가
+def add_message(role, message):
+    st.session_state["messages"].append(ChatMessage(role=role,content=message))
 
 # 사이드바 생성
 with st.sidebar:
@@ -54,7 +57,6 @@ if st.session_state["api_key"] is None:
             st.write(f"⚠️ 기타 오류 발생: {str(e)}")
             api_key_input = None
     else:
-        st.write("openai key를 입력해주세요.")
         api_key_input = None
 else:
     # 메시지 입력 UI

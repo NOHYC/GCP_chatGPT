@@ -35,8 +35,9 @@ if st.session_state["api_key"] is None:
     if api_key_input:
         st.session_state["api_key"] = api_key_input
         try:
-            response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # 또는 "gpt-4"
+            client = OpenAI(api_key=api_key_input)
+            response = client.chat.completions.create(
+            model="gpt-4o",  # 또는 "gpt-4"
             messages=[{"role": "user", "content": "안녕"}],
             timeout=3
             )

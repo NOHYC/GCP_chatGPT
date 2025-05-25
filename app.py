@@ -53,7 +53,9 @@ if st.session_state["api_key"] is None:
         except Exception as e:
             st.write(f"⚠️ 기타 오류 발생: {str(e)}")
             api_key_input = None
-
+    else:
+        st.write("openai key를 입력해주세요.")
+        api_key_input = None
 else:
     # 메시지 입력 UI
     user_input = st.chat_input("궁금한 내용을 물어보세요")

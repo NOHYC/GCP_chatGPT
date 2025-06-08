@@ -27,6 +27,19 @@ with st.sidebar:
 if clear_btn:
     st.session_state["messages"] = []
 
+# 체인 생성 함수
+def create_chain(history_messages):
+
+    prompt = ChatPromptTemplate.from_messages(
+        history_messages + [{"role": "user", "content": "{question}"}]  # 마지막 질문은 플레이스홀더
+    )
+    llm = ChatOpenAI(
+        model_name="gpt-4o",
+        temperature=0,
+        openai_api_key=st.session_state["api_key"]
+    )
+    output_parser = StrOutputParser()
+    return prompt | llm | output_parser
 
 def print_messages():
     for chat_message in st.session_state["messages"]:
@@ -48,40 +61,29 @@ if st.session_state["api_key"] is None:
             st.write("인증 완료")
         except AuthenticationError:
             st.write("❌ OpenAI API 키를 다시 확인해주세요.")
-            api_key_input = None  
+            api_key_input = None
+            st.session_state["api_key"] = None
+
         except APIStatusError as e:
             st.write(f"⚠️ 오류 발생: {str(e)}")
             api_key_input = None
-
+            st.session_state["api_key"] = None
         except Exception as e:
             st.write(f"⚠️ 기타 오류 발생: {str(e)}")
             api_key_input = None
+            st.session_state["api_key"] = None
     else:
         api_key_input = None
+        st.session_state["api_key"] = None
 else:
     # 메시지 입력 UI
     user_input = st.chat_input("궁금한 내용을 물어보세요")
     print_messages()
-
-    # 체인 생성 함수
-    def create_chain():
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", "당신은 친절한 AI assistant입니다."),
-            ("user", "#Question:\n{question}"),
-        ])
-        llm = ChatOpenAI(
-            model_name="gpt-4o",
-            temperature=0,
-            openai_api_key=st.session_state["api_key"]
-        )
-        output_parser = StrOutputParser()
-        return prompt | llm | output_parser
-
     if user_input:
         # 사용자 입력
         st.chat_message("user").write(user_input)
         # chain create
-        chain = create_chain()
+        chain = create_chain(st.session_state["messages"])
     
         response = chain.stream({"question": user_input})
         with st.chat_message("assistant"): # 유저가 질문을 던지면 컨테이너 안에 답변을 실시간 출력
